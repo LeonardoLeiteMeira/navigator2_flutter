@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:navigator2_flutter/model/item_shop.dart';
 
 import '../shop_controller.dart';
 
 class DetailsPage extends StatefulWidget {
-  const DetailsPage({Key? key, required this.itemShop}) : super(key: key);
-
-  final ItemShop itemShop;
+  const DetailsPage({Key? key}) : super(key: key);
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -52,24 +49,24 @@ class _DetailsPageState extends State<DetailsPage> {
             ),
             const SizedBox(height: 20),
             Text(
-              "Id: ${widget.itemShop.id.toString()}",
+              "Id: ${controller.selectedItem!.id.toString()}",
               style: const TextStyle(fontSize: 18),
             ),
             const SizedBox(height: 10),
             Text(
-              "Name: ${widget.itemShop.name}",
+              "Name: ${controller.selectedItem!.name}",
               style: const TextStyle(fontSize: 18),
             ),
             const SizedBox(height: 10),
             Text(
-              "Price R\$${widget.itemShop.price.toString()}",
+              "Price R\$${controller.selectedItem!.price.toString()}",
               style: const TextStyle(fontSize: 18),
             ),
             const SizedBox(height: 50),
             ElevatedButton(
               child: const Text("Add to cart", style: TextStyle(fontSize: 16)),
               onPressed: () {
-                controller.addItemInCart(widget.itemShop);
+                controller.addItemInCart(controller.selectedItem!);
                 _showSnackBar("Add with success", context);
               },
             ),

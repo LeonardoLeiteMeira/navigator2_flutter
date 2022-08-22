@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:navigator2_flutter/shop_controller.dart';
 
 import '../model/item_shop.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({Key? key, required this.itemShop}) : super(key: key);
-  final List<ItemShop> itemShop;
+  const CartPage({Key? key}) : super(key: key);
 
   @override
   State<CartPage> createState() => _CartPageState();
 }
 
 class _CartPageState extends State<CartPage> {
+  late ShopController _controller;
+
+  @override
+  void initState() {
+    _controller = ShopController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +26,7 @@ class _CartPageState extends State<CartPage> {
         title: const Text("My Cart"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () => _controller.cancelFinish(),
         ),
       ),
       body: Container(
@@ -26,9 +34,9 @@ class _CartPageState extends State<CartPage> {
           child: Container(
             alignment: Alignment.center,
             child: ListView.builder(
-                itemCount: widget.itemShop.length,
+                itemCount: _controller.itensShopCard.length,
                 itemBuilder: (context, index) {
-                  return CardItem(itemShop: widget.itemShop[index]);
+                  return CardItem(itemShop: _controller.itensShopCard[index]);
                 }),
           )),
     );

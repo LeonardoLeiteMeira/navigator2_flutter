@@ -24,16 +24,25 @@ class ShoppingPageState extends State<ShoppingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Shopping List"),
-      ),
-      body: ListView.builder(
-        itemCount: examplesOfListItemShop.length,
-        itemBuilder: (context, index) {
-          return itemCard(examplesOfListItemShop[index]);
-        },
-      ),
-    );
+        appBar: AppBar(
+          title: Text(
+              "Shopping List - ${controller.itensShopCard.length.toString()} Itens in cart"),
+        ),
+        body: Column(
+          children: [
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: examplesOfListItemShop.length,
+              itemBuilder: (context, index) {
+                return itemCard(examplesOfListItemShop[index]);
+              },
+            ),
+            ElevatedButton(
+                child: const Text("Finalize Purchase"),
+                onPressed: () => controller.isFinishing = true)
+          ],
+        ));
   }
 
   Widget itemCard(ItemShop itemShop) => Container(

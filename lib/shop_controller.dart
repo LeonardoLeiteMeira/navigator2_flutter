@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
 import 'model/item_shop.dart';
+import 'navigator_controller.dart';
 
 class ShopController extends ChangeNotifier {
   ItemShop? _selectedItem;
+  final NavigatorController _navigatorController = NavigatorController();
   final List<ItemShop> _itensShopCart = [];
   bool _isFinishing = false;
 
@@ -15,18 +17,28 @@ class ShopController extends ChangeNotifier {
 
   void selectItem(ItemShop itemShop) {
     _selectedItem = itemShop;
-    notifyListeners();
+    //TODO - inverter para o navigator_controller escutar a alteração, e não controller avisar
+    _navigatorController.addDetailsPage();
   }
 
   void unselectItem() {
     _selectedItem = null;
-    notifyListeners();
+    _navigatorController.removeDetailsPage();
   }
 
   bool get isFinishing => _isFinishing;
   set isFinishing(bool value) {
     _isFinishing = value;
-    notifyListeners();
+    if (value) {
+      _navigatorController.addCartPage();
+    } else {
+      _navigatorController.removeCartPage();
+    }
+  }
+
+  void cancelFinish() {
+    _isFinishing = false;
+    _navigatorController.removeCartPage();
   }
 
   ItemShop? get selectedItem => _selectedItem;
